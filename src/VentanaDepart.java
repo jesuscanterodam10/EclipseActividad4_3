@@ -103,7 +103,7 @@ public void actionPerformed(ActionEvent e)
 	}
 		  
 	if (e.getSource() == borra) { //SE PULSA EL BOTON  borrar  	
-		borrarDepart(); 
+		borrarDepart("PRUEBA"); 
 	    }
 	if (e.getSource() == modif) { //SE PULSA EL BOTON  modificar  	
 		modifDepart(); 
@@ -128,7 +128,7 @@ public void actionPerformed(ActionEvent e)
 	}
 }
 
-private void borrarDepart() {
+private int borrarDepart(String prueba) {
 	int dep;
 	int confirm;
 	mensaje.setText(" has pulsado el boton Borrar");   
@@ -158,6 +158,7 @@ private void borrarDepart() {
 	       {mensaje.setText("DEPARTAMENTO ERR�NEO");} 
 	   catch (IOException ex2) 
 		   {mensaje.setText("ERRORRR EN EL FICHERO. Fichero no existe. (BORRAR)");}
+	return 0;
 }
 
 private void modifDepart() {
@@ -239,8 +240,7 @@ private void altaDepart() {
 
 public  void verporconsola() throws IOException {     
   String  nom="",loc=""; int dep=0; long pos;
-  File fichero = new File("AleatorioDep.dat");
-  RandomAccessFile file = new RandomAccessFile(fichero, "r");
+  RandomAccessFile file = new RandomAccessFile(new File("AleatorioDep.dat"), "r");
   char cad[] = new char[10], aux; 
   if (file.length()>0 ){
 	pos=0;  //para situarnos al principio
