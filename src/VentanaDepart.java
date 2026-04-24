@@ -238,6 +238,10 @@ private JButton altadepart(String newParam) {
 }
 
 public  void verporconsola() throws IOException {     
+	claseAnidada ej = new claseAnidada();
+	ej.entrada();
+	System.out.println("Llamo a salida: " + ej.salida(10));
+	
   String  nom="",loc=""; int dep=0; long pos;
   File fichero = new File("AleatorioDep.dat");
   RandomAccessFile file = new RandomAccessFile(fichero, "r");
