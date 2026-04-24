@@ -11,7 +11,7 @@ import java.io.RandomAccessFile;
 
 import javax.swing.*;
 
-public class VentanaDepart extends JFrame implements ActionListener  {
+public class VentanaDepart extends JFrame implements ActionListener, InterfaceVentanaDepart  {
 	
 private static final String NOEXISTEDEPART = "DEPARTAMENTO NO EXISTE.";
 private static final long serialVersionUID = 1L;
@@ -221,19 +221,23 @@ public void actionPerformed(ActionEvent e)
 	}
 }
 
-private JButton modifdepart(String newParam) {
+@Override
+public JButton modifdepart(String newParam) {
 	return modif;
 }
 
-private JButton borradepart(String newParam) {
+@Override
+public JButton borradepart(String newParam) {
 	return borra;
 }
 
-private JButton consuldepart(String newParam) {
+@Override
+public JButton consuldepart(String newParam) {
 	return (JButton) consu;
 }
 
-private JButton altadepart(String newParam) {
+@Override
+public JButton altadepart(String newParam) {
 	return (JButton) balta;
 }
 
