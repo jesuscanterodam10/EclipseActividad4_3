@@ -16,7 +16,7 @@ public class FicheroAleatorioVentana {
 		file = new RandomAccessFile(fichero, "rw");	
 		file.close();
 		
-		VentanaDepart v = new VentanaDepart(f);
+		SuperclaseDepart v = new VentanaDepart(f);
 		v.setVisible(true);
 	   
 	}//fin main

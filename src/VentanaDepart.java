@@ -11,14 +11,15 @@ import java.io.RandomAccessFile;
 
 import javax.swing.*;
 
-public class VentanaDepart extends JFrame implements ActionListener  {
+public class VentanaDepart extends SuperclaseDepart implements ActionListener, InterfaceVentanaDepart  {
 	
+private final class OperacionesDep implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+	        System.exit(0);
+	    }
+	}
 private static final long serialVersionUID = 1L;
 JTextField num=new JTextField(10);
-JTextField nombre=new JTextField(25);
-JTextField loc=new JTextField(25);
-
-
 JLabel mensaje=new JLabel(" ----------------------------- ");
 JLabel titulo=new JLabel ("GESTI�N DE DEPARTAMENTOS.");
 
@@ -38,7 +39,8 @@ Color c; //para poner colores
 
 public VentanaDepart(JFrame f )
 { 	
-    setTitle("GESTI�N DE DEPARTAMENTOS.");
+    super();
+	setTitle("GESTI�N DE DEPARTAMENTOS.");
     
     JPanel p0 = new JPanel();
 	c = Color.CYAN;
@@ -85,8 +87,7 @@ public VentanaDepart(JFrame f )
     setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	
 	balta.addActionListener(this);
-	breset.addActionListener(this);
-	fin.addActionListener(this);
+	fin.addActionListener(new OperacionesDep());	fin.addActionListener(this);
 	consu.addActionListener(this);
 	borra.addActionListener(this);
 	modif.addActionListener(this);
@@ -128,7 +129,8 @@ public void actionPerformed(ActionEvent e)
 	}
 }
 
-private int borrarDepart(String prueba) {
+@Override
+public int borrarDepart(String prueba) {
 	int dep;
 	int confirm;
 	mensaje.setText(" has pulsado el boton Borrar");   
@@ -161,7 +163,8 @@ private int borrarDepart(String prueba) {
 	return 0;
 }
 
-private void modifDepart() {
+@Override
+public void modifDepart() {
 	int dep;
 	int confirm;
 	mensaje.setText(" has pulsado el boton Modificar.");   
@@ -191,7 +194,8 @@ private void modifDepart() {
 		   {mensaje.setText(" ERRORRR EN EL FICHERO. Fichero no existe. (MODIFICAR)");}
 }
 
-private void consulDepart() {
+@Override
+public void consulDepart() {
 	int dep;
 	mensaje.setText(" has pulsado el boton alta");   
 	try {
@@ -213,7 +217,8 @@ private void consulDepart() {
 	      }
 }
 
-private void altaDepart() {
+@Override
+public void altaDepart() {
 	int dep;
 	mensaje.setText(" has pulsado el boton alta");   
 	try {
@@ -239,6 +244,9 @@ private void altaDepart() {
 }
 
 public  void verporconsola() throws IOException {     
+	claseAnidada oj = new claseAnidada();
+	oj.entrada();
+	System.out.println("Llamo a Salida: " + oj.salida(10));
   String  nom="",loc=""; int dep=0; long pos;
   RandomAccessFile file = new RandomAccessFile(new File("AleatorioDep.dat"), "r");
   char cad[] = new char[10], aux; 
@@ -291,37 +299,6 @@ boolean consultar(int dep) throws IOException
 	    return false;
 	  } 
 } // fin consultar
-void visualiza(int dep) 
-{	    String nom="",loca=""; 
-		long pos; int depa;
-		File fichero = new File("AleatorioDep.dat");
-		try {
-		RandomAccessFile file = new RandomAccessFile(fichero, "r");
-        // Calculo del reg a leer
-		pos=44 * (dep-1);
-	    file.seek(pos); 
-	    depa=file.readInt();   
-	    System.out.println("Depart leido:" + depa);   
-	    char nom1[]= new char[10], aux,  loc1[]= new char[10];
-		for (int i=0;i<10;i++) 
-		{   aux=file.readChar();
-			nom1[i]=aux;
-		}
-		for (int i=0;i<10;i++) 
-		{   aux=file.readChar();
-			loc1[i]=aux;
-		}
-		nom=new String (nom1);
-		loca=new String (loc1);
-	    System.out.println("DEP: " + dep + ", Nombre: "+  nom + ", Localidad: "+ loca);  
-	    nombre.setText(nom);
-        loc.setText(loca);
-	    file.close(); 
-		}catch (IOException e1) {
-			  System.out.println("ERRROR AL LEEERRRRRR AleatorioDep.dat");    
-			e1.printStackTrace();
-		}	
-} // fin visualiza
 void borrar(int dep) 
 {	    // con borrar ponemos a 0 el dep que se quiere borrar
 	    // y a blancos el nombre y la localidad
@@ -377,29 +354,4 @@ void modificar(int dep)
 			e1.printStackTrace();
 		}	
 } // fin modificar
-void grabar(int dep, String nom, String loc) 
-{	 
-		long pos; StringBuffer buffer = null;
-		File fichero = new File("AleatorioDep.dat");
-		try {
-		RandomAccessFile file = new RandomAccessFile(fichero, "rw");
-        // Calculo del reg a leer
-        pos=44 * (dep-1);
-        //if (file.length()==0) return false; // si est� vac�o
-        
-	    file.seek(pos); 
-	    file.writeInt(dep);       
-	    buffer = new StringBuffer( nom );      
-	    buffer.setLength(10); 
-	    file.writeChars(buffer.toString());//insertar nombre
-	    buffer = new StringBuffer( loc );      
-	    buffer.setLength(10); 
-	    file.writeChars(buffer.toString());//insertar loc
-	    file.close(); 
-	    System.out.println(" GRABADOOO el "+dep);  
-		}catch (IOException e1) {
-		   System.out.println("ERRROR AL grabarr AleatorioDep.dat");    
-			e1.printStackTrace();
-		}	
-} // fin grabar
 }//fin clase
