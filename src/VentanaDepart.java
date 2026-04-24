@@ -169,12 +169,12 @@ public void actionPerformed(ActionEvent e)
 	    	         }
 	    	  else mensaje.setText("DEPARTAMENTO DEBE SER MAYOR QUE 0");	
 	    	  
-	       } catch(java.lang.NumberFormatException ex) //controlar el error del Integer.parseInt ...
+	       } catch(java.lang.NumberFormatException ex) //controlar el error del Integer.parseInt ....
 	           {mensaje.setText(depar_error);} 
 	       catch (IOException ex2) 
 	    	   {mensaje.setText("ERRORRR EN EL FICHERO. Fichero no existe. (BORRAR)");} 
 	    }
-	if (e.getSource() == modifdepart()) { //SE PULSA EL BOTON  modificar ... 	
+	if (e.getSource() == modifdepart()) { //SE PULSA EL BOTON  modificar ... 	.
 		mensaje.setText(" has pulsado el boton Modificar.");   
 		try {
 	    	  dep=Integer.parseInt(num.getText());
